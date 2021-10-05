@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import JYCMRender from "./components/jycm-viewer";
-import { leftJson, rightJson, diffResult } from "./render-case/case-1";
+import JYCMRender from "../src/index";
+import { leftJson, rightJson, diffResult } from "../src/render-case/case-1";
 
 const SimpleForm: FC<{
     label: string,
@@ -23,6 +23,14 @@ const SimpleForm: FC<{
     </div>
 }
 
+const safeJSONCallback = (value: string, cb: (v: string) => void) => {
+    try {
+        JSON.parse(value);
+        return cb(value)
+    } catch (e) {
+        return false;
+    }
+}
 
 const App = () => {
 
@@ -41,22 +49,22 @@ const App = () => {
                 <textarea
                     style={{ width: "100%", wordBreak: "break-all" }}
                     rows={5}
-                    value={leftJSONStr}
-                    onChange={e => { setLeftJSONStr(e.target.value) }} />
+                    defaultValue={leftJSONStr}
+                    onChange={e => { safeJSONCallback(e.target.value, setLeftJSONStr) }} />
             </SimpleForm>
             <SimpleForm label="right JSON">
                 <textarea
                     style={{ width: "100%", wordBreak: "break-all" }}
                     rows={5}
-                    value={rightJSONStr}
-                    onChange={e => { setRightJSONStr(e.target.value) }} />
+                    defaultValue={rightJSONStr}
+                    onChange={e => { safeJSONCallback(e.target.value, setRightJSONStr) }} />
             </SimpleForm>
             <SimpleForm label="JYCM Result">
                 <textarea
                     style={{ width: "100%", wordBreak: "break-all" }}
                     rows={5}
-                    value={jycmResultStr}
-                    onChange={e => { setJYCMResultStr(e.target.value) }} />
+                    defaultValue={jycmResultStr}
+                    onChange={e => { safeJSONCallback(e.target.value, setJYCMResultStr) }} />
             </SimpleForm>
         </div>
 

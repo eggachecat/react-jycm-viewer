@@ -1,21 +1,26 @@
 {
   "name": "react-jycm-viewer",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React rendering tool for JYCM (Json diff).",
   "main": "lib/index.js",
-  "types": "lib/index.d.ts", 
+  "types": "lib/index.d.ts",
   "scripts": {
-    "start": "webpack serve --hot --inline --progress --port 9702",
     "preversion": "npm run lint",
-    "build": "tsc",
-    "lint": "eslint '{src,example}/**/*.{ts,tsx}'"
+    "lint": "eslint '{src,example}/**/*.{ts,tsx}'",
+    "start": "webpack serve --config config/webpack.dev.config.js",
+    "prod": "webpack --config config/webpack.prod.config.js",
+    "build": "webpack --config config/webpack.prod.config.js",
+    "pub": "npm run build && npm publish"
   },
   "author": "sunao_0626@hotmail.com",
   "license": "MIT",
+  "homepage": "https://github.com/eggachecat/react-jycm-viewer",
+  "repository": "https://github.com/eggachecat/react-jycm-viewer",
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-react": "^7.14.5",
     "@types/jest": "^27.0.2",
@@ -27,6 +32,7 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^6.3.0",
     "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.3.0",
     "monaco-editor-webpack-plugin": "^4.2.0",
     "style-loader": "^3.3.0",
     "ts-loader": "^9.2.6",
@@ -36,6 +42,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "@babel/runtime": "^7.15.4",
     "json-bigint": "^1.0.0",
     "less": "^4.1.1",
     "less-loader": "^10.0.1",

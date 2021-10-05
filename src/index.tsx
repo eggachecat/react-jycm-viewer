@@ -1,2 +1,2 @@
 import JYCMViewer from "./components/jycm-viewer";
-export { JYCMViewer }
+export default JYCMViewer;
