@@ -21,26 +21,6 @@ export const leftJson = {
             ]
         }
     ],
-    "set_in_set": [
-        {
-            "id": 1,
-            "label": "label:1",
-            "set": [
-                1,
-                2,
-                3
-            ]
-        },
-        {
-            "id": 2,
-            "label": "label:2",
-            "set": [
-                4,
-                5,
-                6
-            ]
-        }
-    ],
     "list": [
         {
             "id": 1,
@@ -91,6 +71,26 @@ export const leftJson = {
         {
             "customeId": 9,
             "label": "label:the:same"
+        }
+    ],
+    "set_in_set": [
+        {
+            "id": 1,
+            "label": "label:1",
+            "set": [
+                1,
+                2,
+                3
+            ]
+        },
+        {
+            "id": 2,
+            "label": "label:2",
+            "set": [
+                4,
+                5,
+                6
+            ]
         }
     ],
     "set": [
@@ -169,26 +169,6 @@ export const rightJson = {
             ]
         }
     ],
-    "set_in_set": [
-        {
-            "id": 2,
-            "label": "label:2",
-            "set": [
-                6,
-                5,
-                4
-            ]
-        },
-        {
-            "id": 1,
-            "label": "label:1",
-            "set": [
-                3,
-                2,
-                1
-            ]
-        }
-    ],
     "list": [
         {
             "id": 9,
@@ -243,6 +223,26 @@ export const rightJson = {
         {
             "customeId": 999,
             "label": "label:the:same"
+        }
+    ],
+    "set_in_set": [
+        {
+            "id": 2,
+            "label": "label:2",
+            "set": [
+                6,
+                5,
+                4
+            ]
+        },
+        {
+            "id": 1,
+            "label": "label:1",
+            "set": [
+                3,
+                2,
+                1
+            ]
         }
     ],
     "set": [
