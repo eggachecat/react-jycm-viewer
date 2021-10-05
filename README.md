@@ -137,6 +137,16 @@ ReactDOM.render(
     <App />,
     document.getElementById('root') as HTMLElement
 )
+```
 
+# Contributing
+## dev
+```bash
+yarn
+yarn start
+```
 
+## build
+```bash
+yarn build
 ```

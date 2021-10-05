@@ -1,6 +1,6 @@
 {
   "name": "react-jycm-viewer",
-  "private": true,
+  "private": false,
   "version": "0.0.1",
   "description": "React rendering tool for JYCM (Json diff).",
   "main": "lib/index.js",
