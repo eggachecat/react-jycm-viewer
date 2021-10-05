@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib/",
+    "target": "es5",
+    "declaration": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "downlevelIteration": true,
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "@@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "src"
+  ]
+}

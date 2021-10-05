@@ -1,0 +1,136 @@
+.json-diff-editor {
+
+  & .ycm-highlight {
+    background-color: rgba(0, 0, 255, 0.1);
+  }
+
+  & .value_changes {
+    background-color: #E3F2FD;
+  }
+
+  & .list-add {
+    background-color: #E8FFEA;
+  }
+
+  & .list-remove {
+    background-color: #fbe9e7;
+  }
+
+  & .dict-add {
+    background-color: #E8FFEA;
+
+  }
+
+  & .dict-remove {
+    background-color: #fbe9e7;
+  }
+
+  & .operator-expectChange {
+    background-color: #F9FBE7;
+  }
+
+  & .operator-floatInRange {
+    background-color: #EFEBE9;
+  }
+
+  & .operator-str-abs-floatInRange {
+    background-color: #d4e157;
+  }
+
+  & .operator-str-distanceInRange {
+    background-color: #d4e157;
+  }
+
+  & .operator-float-deltaRatioInThreshold {
+    background-color: #d4e157;
+  }
+
+  & .ignore {
+    background-color: #ECEFF1;
+  }
+
+
+  & .highlight {
+    &-red {
+      background-color: #FFECE8;
+    }
+
+    &-orange {
+      background-color: #FFF7E8;
+    }
+
+    &-green {
+      background-color: #E8FFEA;
+    }
+
+    &-blue {
+      background-color: #E8F3FF;
+    }
+
+    &-gold {
+      background-color: #FFFCE8;
+    }
+
+    &-purple {
+      background-color: #F5E8FF;
+    }
+
+    &-grey {
+      background-color: #F7F8FA;
+    }
+  }
+
+
+  & .diff {
+    cursor: pointer;
+
+    &--plus {
+      background-color: #f1f8e9;
+      // background-color: rgba(241, 248, 233, 0.3);
+    }
+
+    &--minus {
+      background-color: #fbe9e7;
+      // background-color: rgba(251, 233, 231, 0.3);
+    }
+
+    &__highlight {
+      font-weight: 1000 !important;
+
+      transition: all 0.1s;
+      // border: 1px solid red;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      // transform: scale(5);
+
+      &--plus {
+        background-color: #f1f8e9;
+      }
+
+      &--minus {
+        background-color: #fbe9e7;
+      }
+    }
+  }
+
+  & .diff-op--ignore {
+    background-color: #f5f5f5;
+
+    & span {
+      background-color: #f5f5f5;
+    }
+  }
+
+  & .diff-op--ignore.diff__highlight {
+    background-color: #eee;
+  }
+
+  & .view-line {
+    cursor: pointer;
+  }
+
+}
+
+
+.ycm-highlight-rule {
+  border-left: 10px solid red;
+}
