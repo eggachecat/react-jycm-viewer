@@ -2,8 +2,7 @@ import { TRow } from "../typings";
 import { iterateJSON } from "../utils";
 import React, { useEffect, useState } from "react";
 
-import * as JSONbig from 'json-bigint';
-
+import * as JSONbig from "json-bigint";
 
 export const useJSONRows = (resp: string) => {
   const [respRows, setRespRows] = useState<TRow[]>([]);
@@ -18,4 +17,4 @@ export const useJSONRows = (resp: string) => {
   return respRows;
 };
 
-export default useJSONRows
+export default useJSONRows;

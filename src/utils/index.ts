@@ -19,7 +19,6 @@ export function jsonPathToPathKey(jsonPath: any[]) {
       return v;
     })
     .join('->');
-  // console.log('jsonPath', jsonPath, ret);
 
   return ret;
 }

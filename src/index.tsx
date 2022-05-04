@@ -1,2 +1,4 @@
-import JYCMViewer from "./components/jycm-viewer";
-export default JYCMViewer;
+export * from "./components/jycm-viewer";
+export * from "./contexts/JYCM";
+export * from "./hooks/useJYCM";
+export * from "./contexts/JYCM";
