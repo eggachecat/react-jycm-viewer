@@ -4,15 +4,11 @@ const baseConfig = require('./webpack.base.js');
 
 const prodConfig = {
   mode: "production",
-  entry: path.join(__dirname, "../src/index.tsx"),
+  entry: path.join(__dirname, "../src/sand-box.tsx"),
   output: {
-    path: path.join(__dirname, "../lib/"),
+    path: path.join(__dirname, "../sandbox/"),
     filename: "index.js",
     libraryTarget: 'commonjs2'
-  },
-  externals: {
-    react: 'react',
-    "react-dom": "react-dom"
   }
 };
 

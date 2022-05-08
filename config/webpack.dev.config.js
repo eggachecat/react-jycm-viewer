@@ -8,6 +8,7 @@ const devConfig = {
   entry: "./example/index.tsx",
   mode: "development",
   devtool: "source-map",
+  entry: path.join(__dirname, "../src/sand-box.tsx"),
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "../example", "index.html"),

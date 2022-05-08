@@ -30,11 +30,13 @@ const useDecorations = (
   rows: TRow[],
   activeJsonPath: any[]
 ) => {
+
   //  对于value_changes的变化
   const [diffDetailDict, setDiffDetailDict] = useState<{
     [_: string]: IDiffDetailItem;
   }>({});
   useEffect(() => {
+
     setDiffDetailDict(
       Object.keys(rawDiffDetailDict).reduce((dict, op) => {
         rawDiffDetailDict[op].forEach((item: any) => {
@@ -131,7 +133,7 @@ const useDecorations = (
     }
 
     setDecorations(_decorations);
-  }, [rawDiffDetailDict, pathKey2Index, mode, rows, activeJsonPath]);
+  }, [rawDiffDetailDict, diffDetailDict, pathKey2Index, mode, rows, activeJsonPath]);
   return { decorations, diffDetailDict };
 };
 

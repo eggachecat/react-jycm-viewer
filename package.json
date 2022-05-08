@@ -1,7 +1,7 @@
 {
   "name": "react-jycm-viewer",
   "private": false,
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "React rendering tool for JYCM (Json diff).",
   "main": "dist/es/index.js",
   "module": "dist/cjs/index.js",
@@ -11,7 +11,7 @@
     "lint": "eslint '{src,example}/**/*.{ts,tsx}'",
     "start": "webpack serve --config config/webpack.dev.config.js",
     "prod": "webpack --config config/webpack.prod.config.js",
-    "build": "webpack --config config/webpack.prod.config.js",
+    "build:sandbox": "webpack --config config/webpack.prod.config.js",
     "build:lib": "rollup -c",
     "pub": "npm run build:lib && npm publish",
     "storybook": "start-storybook -p 6006",
