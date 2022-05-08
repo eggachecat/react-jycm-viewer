@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "./lib/",
     "target": "es5",
     "declaration": true,
+    "declarationDir": "./types",
     "allowJs": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -20,9 +20,10 @@
     "baseUrl": "./",
     "paths": {
       "@@/*": ["./src/*"]
-    }
+    },
   },
   "include": [
-    "src"
-, "example/dev-index.tsx"  ]
+    "src",
+    "example/dev-index.tsx"
+  ]
 }

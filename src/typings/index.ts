@@ -1,4 +1,4 @@
-type TRow = {
+export type TRow = {
   jsonPath: any[];
   key: string | undefined;
   content: any;
@@ -17,9 +17,9 @@ interface IDiffDetailItemMeta {
   right_path: string;
 }
 
-type IDiffDetailItem = IDiffDetailItemMeta & any;
+export type IDiffDetailItem = IDiffDetailItemMeta & any;
 
-type IOperationProps = {
+export type IOperationProps = {
   opInfo: {
     left_path: string;
     right_path: string;
@@ -27,5 +27,3 @@ type IOperationProps = {
     right: any;
   } & any;
 };
-
-export { TRow, IDiffDetailItem, IOperationProps }

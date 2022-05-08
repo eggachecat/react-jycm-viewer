@@ -7,11 +7,32 @@ It is very easy to use thanks to the [React Context] (https://reactjs.org/docs/c
 
 ![gif-show](https://media.giphy.com/media/03PbgaFqYCwyhzOUSU/giphy.gif)
 
+# Good-to-go Example project
 
-# Install
+Here's a working demo project [react-jycm-viewer-example](https://github.com/eggachecat/react-jycm-viewer-example)
+
+# Usage
+
+## dependencices
 ```bash
-yarn add react-jycm-viewer 
+yarn add react-jycm-viewer react-monacor-editor monaco-editor
+yarn add -D monaco-editor-webpack-plugin
 ```
+
+## webpack config
+```js
+{
+    plugins: [
+        // ...
+        new MonacoWebpackPlugin({
+            languages: ["json"],
+        })
+    ]
+}
+
+```
+
+
 
 # Use in your component
 ```TSX
