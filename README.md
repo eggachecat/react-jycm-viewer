@@ -15,7 +15,7 @@ Here's a working demo project [react-jycm-viewer-example](https://github.com/egg
 
 ## dependencices
 ```bash
-yarn add react-jycm-viewer react-monacor-editor monaco-editor
+yarn add react-jycm-viewer react-monaco-editor monaco-editor
 yarn add -D monaco-editor-webpack-plugin
 ```
 
