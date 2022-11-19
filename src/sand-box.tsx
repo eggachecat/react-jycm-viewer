@@ -45,6 +45,9 @@ const useWindowData = () => {
     const [leftJsonStr, setLeftJsonStr] = React.useState('{}')
     const [rightJsonStr, setRightJsonStr] = React.useState('{}')
     const [diffResult, setJYCMResult] = React.useState({});
+    const [leftTitle, setLeftTitle] = React.useState('Left');
+    const [rightTitle, setRightTitle] = React.useState('Right');
+
 
     const obData = React.useCallback(() => {
         // // @ts-ignore
@@ -53,6 +56,19 @@ const useWindowData = () => {
         safeJSONCallback(window.jycmLeftJsonStr, v => setLeftJsonStr(v))
         // @ts-ignore
         safeJSONCallback(window.jycmRightJsonStr, v => setRightJsonStr(v))
+
+        // @ts-ignore
+        if(window.jycmLeftTitle) {
+            // @ts-ignore
+            setLeftTitle(window.jycmLeftTitle)
+        } 
+
+        // @ts-ignore
+        if(window.jycmRightTitle) {
+            // @ts-ignore
+            setRightTitle(window.c)
+        } 
+
         // @ts-ignore
         if (window.diffResult && typeof window.diffResult === 'object') {
             // @ts-ignore
@@ -65,7 +81,9 @@ const useWindowData = () => {
     return {
         leftJsonStr,
         rightJsonStr,
-        diffResult
+        diffResult,
+        leftTitle,
+        rightTitle
     }
 }
 
@@ -74,6 +92,8 @@ function SandBox() {
         leftJsonStr,
         rightJsonStr,
         diffResult,
+        leftTitle,
+        rightTitle
     } = useWindowData();
 
     // use this can ave your time! see provider below
@@ -96,7 +116,7 @@ function SandBox() {
                 {/* <JYCMRender leftTitle="BenchMark" rightTitle="Actual" /> */}
                 <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
                     <div style={{ flexGrow: 1, height: "100%" }}>
-                        <JYCMRender leftTitle='Left' rightTitle='Right' />
+                        <JYCMRender leftTitle={leftTitle} rightTitle={rightTitle} />
                     </div>
                     <div style={{ flexBasis: "24%", height: '100%', display: "flex", flexDirection: "column" }}>
                         <div style={{ textAlign: 'center', fontWeight: 700 }}>Diff Detail</div>
