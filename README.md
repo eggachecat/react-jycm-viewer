@@ -3,6 +3,9 @@
 This is the renderer for [JYCM](https://github.com/eggachecat/jycm).
 
 It is very easy to use thanks to the [React Context] (https://reactjs.org/docs/context.html)
+
+**LIVE DEMO**: https://github.com/eggachecat/jycm-viewer
+
 # GIF-Show
 
 ![gif-show](https://media.giphy.com/media/03PbgaFqYCwyhzOUSU/giphy.gif)
@@ -10,6 +13,8 @@ It is very easy to use thanks to the [React Context] (https://reactjs.org/docs/c
 # Good-to-go Example project
 
 Here's a working demo project [react-jycm-viewer-example](https://github.com/eggachecat/react-jycm-viewer-example)
+
+Or here: [jycm-viewer](https://github.com/eggachecat/jycm-viewer)
 
 # Usage
 
