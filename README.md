@@ -14,7 +14,7 @@ It is very easy to use thanks to the [React Context] (https://reactjs.org/docs/c
 
 Here's a working demo project [react-jycm-viewer-example](https://github.com/eggachecat/react-jycm-viewer-example)
 
-Or here: [jycm-viewer](https://github.com/eggachecat/jycm-viewer)
+Or here: [https://eggachecat.github.io/jycm-json-diff-viewer/](https://eggachecat.github.io/jycm-json-diff-viewer/)
 
 # Usage
 
