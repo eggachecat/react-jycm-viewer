@@ -1,6 +1,7 @@
 import { EVENT_PAIR } from "../common";
 import { IMonacoJsonHighlighter } from "../components/monaco-json-highlighter";
-import { IDiffDetailItem, JYCMDiffResult, TRow } from "../typings";
+import { IDiffDetailItem, JYCMDiffResult, JYCMDiffSummary, TRow } from "../typings";
+import { summarizeJYCMDiff } from "../summary";
 import { jsonPathToPathKey } from "../utils";
 import {
   Dispatch,
@@ -46,6 +47,7 @@ export type IUseJYCM = {
   leftEditorRef: RefObject<IMonacoJsonHighlighter>;
   rightEditorRef: RefObject<IMonacoJsonHighlighter>;
   pairInfo: Record<string, unknown>;
+  summary: JYCMDiffSummary;
 };
 
 export const useJYCM = ({
@@ -54,6 +56,7 @@ export const useJYCM = ({
   diffResult,
 }: IUseJYCMProps): IUseJYCM => {
   const diffDetailDict = diffResult || {};
+  const summary = useMemo(() => summarizeJYCMDiff(diffDetailDict), [diffDetailDict]);
   const jsonPathKeyPairs = useMemo<PathPairs>(() => {
     const pairs: PathPairs = { left: {}, right: {} };
     (diffDetailDict[EVENT_PAIR] || []).forEach((pair) => {
@@ -125,6 +128,7 @@ export const useJYCM = ({
     leftEditorRef,
     rightEditorRef,
     pairInfo,
+    summary,
   };
 };
 

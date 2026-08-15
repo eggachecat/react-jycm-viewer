@@ -7,6 +7,7 @@ import { EVENT_LIST_ADD, EVENT_LIST_REMOVE } from '../common';
 import useHighlightPathRegexDecorations from '../hooks/useHighlightPathRegexDecorations';
 import { jsonPathToPathKey, pathKeyToJsonPath, TRowsToStr } from '../utils';
 import MonacoJsonHighlighter from './monaco-json-highlighter';
+import { BusinessDiffSummary } from './business-diff-summary';
 
 
 const CodeDiv = styled.div`
@@ -42,6 +43,7 @@ export type IJYCMRenderProps = {
   containerStyle?: React.CSSProperties;
   leftStyle?: React.CSSProperties;
   rightStyle?: React.CSSProperties;
+  showSummary?: boolean;
 };
 
 export const JYCMRender: FC<IJYCMRenderProps> = ({
@@ -53,6 +55,7 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
   containerStyle,
   leftStyle,
   rightStyle,
+  showSummary = false,
 }) => {
   const {
     jsonPathKeyPairs,
@@ -194,10 +197,13 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
         height: "100%",
         minHeight: "350px",
         overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
         ...containerStyle,
       }}
     >
-      <div style={{ height: "100%", width: "100%" }}>
+      {showSummary && <BusinessDiffSummary />}
+      <div style={{ flex: 1, minHeight: 0, width: "100%" }}>
         <div
           style={{
             height: "100%",

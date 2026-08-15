@@ -21,6 +21,23 @@ export type JYCMDiffRecord = {
 
 export type JYCMDiffResult = Record<string, JYCMDiffRecord[]>;
 
+export type JYCMRuleViolation = JYCMDiffRecord & {
+  event: string;
+  rule?: string;
+  pass: false;
+};
+
+export type JYCMDiffSummary = {
+  equal: boolean;
+  change_count: number;
+  rule_evaluation_count: number;
+  rule_violation_count: number;
+  matched_pair_count: number;
+  affected_paths: string[];
+  events: Record<string, number>;
+  violations: JYCMRuleViolation[];
+};
+
 interface IDiffDetailItemMeta {
   left: any;
   right: any;

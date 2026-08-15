@@ -79,6 +79,7 @@ export function OrderReview() {
         diffResult={diffResult}
         leftTitle="Before"
         rightTitle="After"
+        showSummary
       />
     </div>
   );
@@ -86,6 +87,14 @@ export function OrderReview() {
 ```
 
 The parent needs an explicit height because Monaco fills its container.
+
+With `showSummary`, the viewer adds an accessible business-level status panel:
+semantic equality, structural changes, rule checks, rule violations, and
+matched pairs. It understands named rule events emitted by the Python and
+JavaScript Business Diff Policy APIs.
+
+For a custom layout, use the exported `summarizeJYCMDiff(diffResult)` helper or
+render `<BusinessDiffSummary />` anywhere inside `JYCMContext.Provider`.
 
 ## Use a real JYCM result
 
