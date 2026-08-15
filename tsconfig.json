@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2018",
     "declaration": true,
     "declarationDir": "./types",
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "sourceMap": true,
     "esModuleInterop": true,
@@ -15,7 +15,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "downlevelIteration": true,
     "jsx": "react",
     "baseUrl": "./",
     "paths": {

@@ -1,6 +1,7 @@
-import useJYCM, { IUseJYCM } from "@@/hooks/useJYCM";
-import React from "react";
+import { IUseJYCM } from "../hooks/useJYCM";
+import * as React from "react";
 
-export const JYCMContext = React.createContext<IUseJYCM | null>(null);
+export const JYCMContext: React.Context<IUseJYCM | null> =
+  React.createContext<IUseJYCM | null>(null);
 
-export const useJYCMContext = () => React.useContext(JYCMContext)!;
+export const useJYCMContext = (): IUseJYCM => React.useContext(JYCMContext)!;

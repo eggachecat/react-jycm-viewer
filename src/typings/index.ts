@@ -10,6 +10,17 @@ export type TRow = {
   pairIndex?: number;
 };
 
+export type JYCMDiffRecord = {
+  left: unknown;
+  right: unknown;
+  left_path: string;
+  right_path: string;
+  pass?: boolean;
+  [key: string]: unknown;
+};
+
+export type JYCMDiffResult = Record<string, JYCMDiffRecord[]>;
+
 interface IDiffDetailItemMeta {
   left: any;
   right: any;

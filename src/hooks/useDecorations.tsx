@@ -1,7 +1,7 @@
 import { EVENT_PAIR, NON_EXIST_PLACE_HOLDER } from "../common";
-import { IDiffDetailItem, TRow } from "../typings";
+import { IDiffDetailItem, JYCMDiffResult, TRow } from "../typings";
 import { isJsonPathsMatch, jsonPathToPathKey } from "../utils";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { monaco } from "react-monaco-editor";
 
 // 找到diff的最root的
@@ -22,23 +22,15 @@ const findJsonPathToRoot = (
 };
 
 const useDecorations = (
-  rawDiffDetailDict: {
-    [_: string]: IDiffDetailItem;
-  },
-  pathKey2Index: { [_: string]: number },
+  rawDiffDetailDict: JYCMDiffResult,
   mode: "left" | "right",
   rows: TRow[],
   activeJsonPath: any[]
 ) => {
 
   //  对于value_changes的变化
-  const [diffDetailDict, setDiffDetailDict] = useState<{
-    [_: string]: IDiffDetailItem;
-  }>({});
-  useEffect(() => {
-
-    setDiffDetailDict(
-      Object.keys(rawDiffDetailDict).reduce((dict, op) => {
+  const diffDetailDict = useMemo(
+    () => Object.keys(rawDiffDetailDict).reduce((dict, op) => {
         rawDiffDetailDict[op].forEach((item: any) => {
           if (item[mode] !== NON_EXIST_PLACE_HOLDER) {
             dict[item[`${mode}_path`]] = {
@@ -49,15 +41,11 @@ const useDecorations = (
         });
 
         return dict;
-      }, {} as { [_: string]: IDiffDetailItem })
-    );
-  }, [rawDiffDetailDict]);
+      }, {} as { [_: string]: IDiffDetailItem }),
+    [rawDiffDetailDict, mode]
+  );
 
-  const [decorations, setDecorations] = useState<
-    monaco.editor.IModelDeltaDecoration[]
-  >([]);
-
-  useEffect(() => {
+  const decorations = useMemo(() => {
     const _decorations: monaco.editor.IModelDeltaDecoration[] = [];
 
     for (let i = 0; i < rows.length; i += 1) {
@@ -132,8 +120,8 @@ const useDecorations = (
       });
     }
 
-    setDecorations(_decorations);
-  }, [rawDiffDetailDict, diffDetailDict, pathKey2Index, mode, rows, activeJsonPath]);
+    return _decorations;
+  }, [diffDetailDict, mode, rows, activeJsonPath]);
   return { decorations, diffDetailDict };
 };
 

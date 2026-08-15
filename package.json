@@ -3,16 +3,28 @@
   "private": false,
   "version": "0.1.0",
   "description": "React rendering tool for JYCM (Json diff).",
-  "main": "dist/es/index.js",
-  "module": "dist/cjs/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
   "types": "dist/es/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/es/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "preversion": "npm run lint",
-    "lint": "eslint '{src,example}/**/*.{ts,tsx}'",
+    "lint": "tsc --noEmit",
+    "check": "pnpm run lint && pnpm run build:lib",
     "start": "webpack serve --config config/webpack.dev.config.js",
     "prod": "webpack --config config/webpack.prod.config.js",
     "build:sandbox": "webpack --config config/webpack.prod.config.js",
-    "build:lib": "rollup -c",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build:lib": "pnpm run clean && rollup -c",
     "pub": "npm run build:lib && npm publish",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -21,6 +33,15 @@
   "license": "MIT",
   "homepage": "https://github.com/eggachecat/react-jycm-viewer",
   "repository": "https://github.com/eggachecat/react-jycm-viewer",
+  "keywords": [
+    "json",
+    "diff",
+    "react",
+    "viewer",
+    "monaco",
+    "jycm",
+    "semantic-diff"
+  ],
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
@@ -80,7 +101,7 @@
   "peerDependencies": {
     "react-monaco-editor": "^0.48.0",
     "monaco-editor": "^0.33.0",
-    "react": ">=16.0.0",
-    "react-dom": ">=16.0.0"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   }
 }

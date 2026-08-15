@@ -1,10 +1,10 @@
-import React, {
+import * as React from "react";
+import {
   ForwardRefExoticComponent,
   Ref,
   useEffect,
   useImperativeHandle,
   useRef,
-  useState,
 } from "react";
 import MonacoEditor, { monaco } from "react-monaco-editor";
 import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
@@ -32,19 +32,20 @@ const MonacoJsonHighlighter: ForwardRefExoticComponent<{
     clickFuncRef.current = onClick;
   });
 
-  const [oldDecorations, setOldDecorations] = useState<string[]>([]);
+  const decorationIdsRef = useRef<string[]>([]);
 
   useEffect(() => {
     if (editorRef.current?.editor) {
-      setOldDecorations(
-        editorRef.current.editor.deltaDecorations(oldDecorations, decorations)
+      decorationIdsRef.current = editorRef.current.editor.deltaDecorations(
+        decorationIdsRef.current,
+        decorations
       );
     }
   }, [decorations]);
 
   useEffect(() => {
     if (editorRef.current?.editor) {
-      editorRef.current.editor.onMouseDown((e) => {
+      const subscription = editorRef.current.editor.onMouseDown((e) => {
         if (e.target.position) {
           const { lineNumber } = e.target.position;
           const clickedIndex = lineNumber - 1;
@@ -57,7 +58,9 @@ const MonacoJsonHighlighter: ForwardRefExoticComponent<{
           }
         }
       });
+      return () => subscription.dispose();
     }
+    return undefined;
   }, [editorRef]);
 
   useImperativeHandle(ref, () => ({

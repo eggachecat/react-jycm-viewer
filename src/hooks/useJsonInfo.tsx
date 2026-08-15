@@ -1,6 +1,6 @@
 import { TRow } from "../typings";
 import { jsonPathToPathKey } from "../utils";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import useJsonRows from "../hooks/useJsonRows";
 
 const getPathKey2Index = (respRows: TRow[]) =>
@@ -13,12 +13,7 @@ const getPathKey2Index = (respRows: TRow[]) =>
 
 const useJsonInfo = (jsonStr: string) => {
   const jsonRows = useJsonRows(jsonStr);
-  const [pathKey2Index, setPathKey2Index] = useState<{ [_: string]: number }>(
-    {}
-  );
-  useEffect(() => {
-    setPathKey2Index(getPathKey2Index(jsonRows));
-  }, [jsonRows]);
+  const pathKey2Index = useMemo(() => getPathKey2Index(jsonRows), [jsonRows]);
 
   return {
     jsonRows,
