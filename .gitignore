@@ -86,6 +86,9 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+types/
+storybook-static/
+.test-build/
 
 # Gatsby files
 .cache/

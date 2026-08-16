@@ -19,7 +19,8 @@
   "scripts": {
     "preversion": "npm run lint",
     "lint": "tsc --noEmit",
-    "check": "pnpm run lint && pnpm run build:lib",
+    "check": "pnpm run lint && pnpm run build:lib && pnpm run test:patch",
+    "test:patch": "node -e \"require('fs').rmSync('.test-build',{recursive:true,force:true})\" && tsc src/patch-utils.ts --target es2017 --module commonjs --outDir .test-build && node tests/patch-viewer.test.js && node -e \"require('fs').rmSync('.test-build',{recursive:true,force:true})\"",
     "start": "webpack serve --config config/webpack.dev.config.js",
     "prod": "webpack --config config/webpack.prod.config.js",
     "build:sandbox": "webpack --config config/webpack.prod.config.js",

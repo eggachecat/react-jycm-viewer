@@ -5,3 +5,4 @@ export * from "./hooks/useJYCM";
 export * from "./typings";
 export * from "./summary";
 export * from "./components/business-diff-summary";
+export * from "./components/jycm-patch-viewer";

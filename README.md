@@ -96,6 +96,32 @@ JavaScript Business Diff Policy APIs.
 For a custom layout, use the exported `summarizeJYCMDiff(diffResult)` helper or
 render `<BusinessDiffSummary />` anywhere inside `JYCMContext.Provider`.
 
+## JSON Patch viewer
+
+`JYCMPatchViewer` is a standalone RFC 6902 component. It does not require
+`JYCMContext`, Monaco, or a diff result, so it can be embedded in deployment,
+audit, approval, and migration tools independently.
+
+```tsx
+import { JYCMPatchViewer } from "react-jycm-viewer";
+
+<JYCMPatchViewer
+  patch={differ.toJsonPatch(true)}
+  title="Proposed deployment patch"
+  onNavigate={(pointer) => focusJsonPointer(pointer)}
+  onApply={(patch) => differ.applyPatch(before, patch)}
+/>
+```
+
+The component supports all six RFC 6902 operations, operation/path filtering,
+selection details, JSON Pointer navigation callbacks, validation messages,
+copy, download, controlled selection, and responsive layouts. Pure
+`validateJsonPatch()` and `summarizeJsonPatch()` helpers are also exported.
+
+Run `pnpm storybook` and open **JYCMPatchViewer / Interactive workbench** for
+the editable demo page. `pnpm build-storybook` produces the deployable static
+demo.
+
 ## Use a real JYCM result
 
 The viewer does not invent a second diff format. Pass the output of
