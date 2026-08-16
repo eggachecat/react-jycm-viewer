@@ -1,11 +1,13 @@
-import { useJYCMContext } from '@@/contexts/JYCM';
-import React, { FC, useContext, useEffect, useRef, useState } from 'react';
+import { useJYCMContext } from '../contexts/JYCM';
+import * as React from 'react';
+import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { EVENT_LIST_ADD, EVENT_LIST_REMOVE } from '../common';
 import useHighlightPathRegexDecorations from '../hooks/useHighlightPathRegexDecorations';
 import { jsonPathToPathKey, pathKeyToJsonPath, TRowsToStr } from '../utils';
 import MonacoJsonHighlighter from './monaco-json-highlighter';
+import { BusinessDiffSummary } from './business-diff-summary';
 
 
 const CodeDiv = styled.div`
@@ -41,6 +43,7 @@ export type IJYCMRenderProps = {
   containerStyle?: React.CSSProperties;
   leftStyle?: React.CSSProperties;
   rightStyle?: React.CSSProperties;
+  showSummary?: boolean;
 };
 
 export const JYCMRender: FC<IJYCMRenderProps> = ({
@@ -52,12 +55,10 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
   containerStyle,
   leftStyle,
   rightStyle,
+  showSummary = false,
 }) => {
   const {
     jsonPathKeyPairs,
-    setJsonPathKeyPairs,
-    diffDetailDict,
-    setDiffDetailDict,
     activeLeftJsonPath,
     setActiveLeftJsonPath,
     activeRightJsonPath,
@@ -72,14 +73,25 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
     rightJsonPath2DiffDetail,
     leftEditorRef,
     rightEditorRef,
-    pairInfo,
   } = useJYCMContext()!;
+
+  const leftJsonStr = useMemo(() => TRowsToStr(leftJsonRows), [leftJsonRows]);
+  const rightJsonStr = useMemo(() => TRowsToStr(rightJsonRows), [rightJsonRows]);
 
   const { decorations: defaultLeftDecorations } =
     useHighlightPathRegexDecorations(leftJsonRows, pathRegexToHighlight);
 
   const { decorations: defaultRightDecorations } =
     useHighlightPathRegexDecorations(rightJsonRows, pathRegexToHighlight);
+
+  const allLeftDecorations = useMemo(
+    () => [...leftDecorations, ...defaultLeftDecorations],
+    [leftDecorations, defaultLeftDecorations]
+  );
+  const allRightDecorations = useMemo(
+    () => [...rightDecorations, ...defaultRightDecorations],
+    [rightDecorations, defaultRightDecorations]
+  );
 
   const isJsonPathAdd = (jsonPath_: any[]) => {
     const _jsonPath = [...jsonPath_];
@@ -118,7 +130,7 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
     const row = leftJsonRows[_rowIndex];
 
     if (_moveSelf && leftEditorRef) {
-      leftEditorRef.current!.goTo(Math.max(0, _startIndex) + 1);
+      leftEditorRef.current?.goTo(Math.max(0, _startIndex) + 1);
     }
 
     if (row?.jsonPath) {
@@ -133,9 +145,10 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
           setActiveRightJsonPath([]);
         } else {
           setActiveRightJsonPath(pathKeyToJsonPath(pairPathKey));
-          rightEditorRef.current!.goTo(
-            Math.max(0, rightPathKey2Index[pairPathKey] - delta) + 1
-          );
+          const pairIndex = rightPathKey2Index[pairPathKey];
+          if (typeof pairIndex === "number") {
+            rightEditorRef.current?.goTo(Math.max(0, pairIndex - delta) + 1);
+          }
         }
       } else {
         setActiveRightJsonPath([]);
@@ -152,7 +165,7 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
     const row = rightJsonRows[_rowIndex];
 
     if (_moveSelf && rightEditorRef) {
-      rightEditorRef.current!.goTo(Math.max(0, _startIndex) + 1);
+      rightEditorRef.current?.goTo(Math.max(0, _startIndex) + 1);
     }
 
     if (row?.jsonPath) {
@@ -167,9 +180,10 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
           setActiveLeftJsonPath([]);
         } else {
           setActiveLeftJsonPath(pathKeyToJsonPath(pairPathKey));
-          leftEditorRef.current!.goTo(
-            Math.max(0, leftPathKey2Index[pairPathKey] - delta) + 1
-          );
+          const pairIndex = leftPathKey2Index[pairPathKey];
+          if (typeof pairIndex === "number") {
+            leftEditorRef.current?.goTo(Math.max(0, pairIndex - delta) + 1);
+          }
         }
       } else {
         setActiveLeftJsonPath([]);
@@ -183,10 +197,13 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
         height: "100%",
         minHeight: "350px",
         overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
         ...containerStyle,
       }}
     >
-      <div style={{ height: "100%", width: "100%" }}>
+      {showSummary && <BusinessDiffSummary />}
+      <div style={{ flex: 1, minHeight: 0, width: "100%" }}>
         <div
           style={{
             height: "100%",
@@ -210,8 +227,8 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
             <div className="code" style={{ minHeight: "350px", ...leftStyle }}>
               <MonacoJsonHighlighter
                 ref={leftEditorRef}
-                jsonStr={TRowsToStr(leftJsonRows)}
-                decorations={[...leftDecorations, ...defaultLeftDecorations]}
+                jsonStr={leftJsonStr}
+                decorations={allLeftDecorations}
                 onClick={(_rowIndex, _startIndex) =>
                   clickOnLeft(_rowIndex, _startIndex)
                 }
@@ -232,8 +249,8 @@ export const JYCMRender: FC<IJYCMRenderProps> = ({
             <div className="code" style={{ minHeight: "350px", ...rightStyle }}>
               <MonacoJsonHighlighter
                 ref={rightEditorRef}
-                jsonStr={TRowsToStr(rightJsonRows)}
-                decorations={[...rightDecorations, ...defaultRightDecorations]}
+                jsonStr={rightJsonStr}
+                decorations={allRightDecorations}
                 onClick={(_rowIndex, _startIndex) =>
                   clickOnRight(_rowIndex, _startIndex)
                 }

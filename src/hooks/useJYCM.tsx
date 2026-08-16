@@ -1,8 +1,17 @@
-import { EVENT_PAIR } from "@@/common";
-import { IMonacoJsonHighlighter } from "@@/components/monaco-json-highlighter";
-import { IDiffDetailItem } from "@@/typings";
-import { jsonPathToPathKey } from "@@/utils";
-import { useEffect, useRef, useState } from "react";
+import { EVENT_PAIR } from "../common";
+import { IMonacoJsonHighlighter } from "../components/monaco-json-highlighter";
+import { IDiffDetailItem, JYCMDiffResult, JYCMDiffSummary, TRow } from "../typings";
+import { summarizeJYCMDiff } from "../summary";
+import { jsonPathToPathKey } from "../utils";
+import {
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { monaco } from "react-monaco-editor";
 
 import useDecorations from "./useDecorations";
 import useJsonInfo from "./useJsonInfo";
@@ -10,32 +19,51 @@ import useJsonInfo from "./useJsonInfo";
 export type IUseJYCMProps = {
   leftJsonStr: string;
   rightJsonStr: string;
-  diffResult: any;
+  diffResult: JYCMDiffResult;
 };
 
-export const useJYCM = ({ leftJsonStr, rightJsonStr, diffResult }: IUseJYCMProps) => {
-  const [jsonPathKeyPairs, setJsonPathKeyPairs] = useState<{
-    left: { [_: string]: string };
-    right: { [_: string]: string };
-  }>({ left: {}, right: {} });
+type PathPairs = {
+  left: Record<string, string>;
+  right: Record<string, string>;
+};
 
-  const [diffDetailDict, setDiffDetailDict] = useState<{
-    [_: string]: IDiffDetailItem;
-  }>({});
+type DiffByPath = Record<string, IDiffDetailItem>;
 
-  useEffect(() => {
-    if (diffResult) {
-      const _diffDetailDict = diffResult;
-      setDiffDetailDict(_diffDetailDict);
-      if (_diffDetailDict[EVENT_PAIR]) {
-        const _jsonPathKeyPair: any = { left: {}, right: {} };
-        _diffDetailDict[EVENT_PAIR].forEach((p: any) => {
-          _jsonPathKeyPair.left[p.left_path as string] = p.right_path;
-          _jsonPathKeyPair.right[p.right_path as string] = p.left_path;
-        });
-        setJsonPathKeyPairs(_jsonPathKeyPair);
-      }
-    }
+export type IUseJYCM = {
+  jsonPathKeyPairs: PathPairs;
+  diffDetailDict: JYCMDiffResult;
+  activeLeftJsonPath: any[];
+  setActiveLeftJsonPath: Dispatch<SetStateAction<any[]>>;
+  activeRightJsonPath: any[];
+  setActiveRightJsonPath: Dispatch<SetStateAction<any[]>>;
+  leftJsonRows: TRow[];
+  leftPathKey2Index: Record<string, number>;
+  rightJsonRows: TRow[];
+  rightPathKey2Index: Record<string, number>;
+  leftDecorations: monaco.editor.IModelDeltaDecoration[];
+  leftJsonPath2DiffDetail: DiffByPath;
+  rightDecorations: monaco.editor.IModelDeltaDecoration[];
+  rightJsonPath2DiffDetail: DiffByPath;
+  leftEditorRef: RefObject<IMonacoJsonHighlighter>;
+  rightEditorRef: RefObject<IMonacoJsonHighlighter>;
+  pairInfo: Record<string, unknown>;
+  summary: JYCMDiffSummary;
+};
+
+export const useJYCM = ({
+  leftJsonStr,
+  rightJsonStr,
+  diffResult,
+}: IUseJYCMProps): IUseJYCM => {
+  const diffDetailDict = diffResult || {};
+  const summary = useMemo(() => summarizeJYCMDiff(diffDetailDict), [diffDetailDict]);
+  const jsonPathKeyPairs = useMemo<PathPairs>(() => {
+    const pairs: PathPairs = { left: {}, right: {} };
+    (diffDetailDict[EVENT_PAIR] || []).forEach((pair) => {
+      pairs.left[pair.left_path] = pair.right_path;
+      pairs.right[pair.right_path] = pair.left_path;
+    });
+    return pairs;
   }, [diffResult]);
 
   const [activeLeftJsonPath, setActiveLeftJsonPath] = useState<any[]>([]);
@@ -51,7 +79,6 @@ export const useJYCM = ({ leftJsonStr, rightJsonStr, diffResult }: IUseJYCMProps
     diffDetailDict: leftJsonPath2DiffDetail,
   } = useDecorations(
     diffDetailDict,
-    leftPathKey2Index,
     "left",
     leftJsonRows,
     activeLeftJsonPath
@@ -62,7 +89,6 @@ export const useJYCM = ({ leftJsonStr, rightJsonStr, diffResult }: IUseJYCMProps
     diffDetailDict: rightJsonPath2DiffDetail,
   } = useDecorations(
     diffDetailDict,
-    rightPathKey2Index,
     "right",
     rightJsonRows,
     activeRightJsonPath
@@ -71,24 +97,22 @@ export const useJYCM = ({ leftJsonStr, rightJsonStr, diffResult }: IUseJYCMProps
   const leftEditorRef = useRef<IMonacoJsonHighlighter>(null);
   const rightEditorRef = useRef<IMonacoJsonHighlighter>(null);
 
-  const [pairInfo, setPairInfo] = useState({});
-  useEffect(() => {
-    setPairInfo({
+  const pairInfo = useMemo(
+    () => ({
       ...leftJsonPath2DiffDetail[jsonPathToPathKey(activeLeftJsonPath)],
       ...rightJsonPath2DiffDetail[jsonPathToPathKey(activeRightJsonPath)],
-    });
-  }, [
-    activeLeftJsonPath,
-    activeRightJsonPath,
-    leftJsonPath2DiffDetail,
-    rightJsonPath2DiffDetail,
-  ]);
+    }),
+    [
+      activeLeftJsonPath,
+      activeRightJsonPath,
+      leftJsonPath2DiffDetail,
+      rightJsonPath2DiffDetail,
+    ]
+  );
 
   return {
     jsonPathKeyPairs,
-    setJsonPathKeyPairs,
     diffDetailDict,
-    setDiffDetailDict,
     activeLeftJsonPath,
     setActiveLeftJsonPath,
     activeRightJsonPath,
@@ -104,9 +128,8 @@ export const useJYCM = ({ leftJsonStr, rightJsonStr, diffResult }: IUseJYCMProps
     leftEditorRef,
     rightEditorRef,
     pairInfo,
+    summary,
   };
 };
-
-export type IUseJYCM = ReturnType<typeof useJYCM>;
 
 export default useJYCM;

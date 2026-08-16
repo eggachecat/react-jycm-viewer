@@ -1,8 +1,8 @@
 export * from "./components/jycm-viewer";
+export * from "./components/jycm-viewer-provider";
 export * from "./contexts/JYCM";
 export * from "./hooks/useJYCM";
-
-const sayHello = () => {
-    console.log('say hello')
-};
-export default sayHello;
+export * from "./typings";
+export * from "./summary";
+export * from "./components/business-diff-summary";
+export * from "./components/jycm-patch-viewer";

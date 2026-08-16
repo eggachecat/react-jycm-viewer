@@ -1,21 +1,16 @@
 import { TRow } from '../typings';
 import { jsonPathToPathKey, isValidRegex } from '../utils';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { monaco } from 'react-monaco-editor';
 
 const useHighlightPathRegexDecorations = (
   jsonRows: TRow[],
   pathRegex?: string,
 ) => {
-  const [decorations, setDecroations] = useState<
-    monaco.editor.IModelDeltaDecoration[]
-  >([]);
-
-  useEffect(() => {
+  const decorations = useMemo(() => {
     if (pathRegex && isValidRegex(pathRegex)) {
       const matcher = RegExp(pathRegex);
-      setDecroations(
-        jsonRows
+      return jsonRows
           .map((v, i) => ({
             ...v,
             lineNumber: 1 + i,
@@ -35,11 +30,9 @@ const useHighlightPathRegexDecorations = (
               });
             }
             return [...prev, ..._decorations];
-          }, [] as monaco.editor.IModelDeltaDecoration[]),
-      );
-    } else {
-      setDecroations([]);
+          }, [] as monaco.editor.IModelDeltaDecoration[]);
     }
+    return [];
   }, [jsonRows, pathRegex]);
 
   return { decorations };

@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
 
 import MonacoEditor from 'react-monaco-editor';
 import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
 
 import { useJYCMContext } from '..';
-import { jsonPathToPathKey } from '@@/utils';
+import { jsonPathToPathKey } from '../utils';
 
 export const DiffDetailViewer: React.FC<any> = () => {
     const { pairInfo, activeLeftJsonPath, activeRightJsonPath, leftJsonPath2DiffDetail } =

@@ -3,7 +3,7 @@ import './sand-box.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import JYCMLib, {
+import {
     JYCMRender,
     JYCMContext,
     IUseJYCMProps,
@@ -11,7 +11,6 @@ import JYCMLib, {
     useJYCM,
     useJYCMContext
 } from "./index";
-import MonacoEditor from 'react-monaco-editor';
 import { DiffDetailViewer } from './components/jycm-diff-detail-viewer-simple';
 
 
