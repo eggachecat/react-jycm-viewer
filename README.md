@@ -14,6 +14,32 @@ recomputing or discarding those semantics.
 [Python diff engine](https://github.com/eggachecat/jycm) ·
 [JavaScript diff engine](https://github.com/eggachecat/jycm-js)
 
+## Choose a JYCM project
+
+JYCM is a family of tools for comparing JSON with explicit business rules.
+
+| Project | Use it for |
+| --- | --- |
+| [jycm](https://github.com/eggachecat/jycm) | Python comparisons, CLI reports, and business policies |
+| [jycm-js](https://github.com/eggachecat/jycm-js) | JavaScript / TypeScript comparisons in Node.js and browsers; npm package `jycm` |
+| [react-jycm-viewer](https://github.com/eggachecat/react-jycm-viewer) | Embedding a visual JSON diff or JSON Patch viewer in React |
+| [jycm-json-diff-viewer](https://github.com/eggachecat/jycm-json-diff-viewer) | Trying comparisons in the online playground and studying an integration example |
+
+[Try the playground](https://eggachecat.github.io/jycm-json-diff-viewer/) ·
+[Task guides](https://github.com/eggachecat/jycm/tree/master/docs/source/guides) ·
+[Algorithm paper](https://arxiv.org/abs/2305.05865)
+
+## Source and package versions
+
+This README describes the repository's default branch. Package registries and
+the deployed playground may contain earlier releases. Before integrating
+Business Diff Policy or JSON Patch APIs, confirm that your installed version
+exports the APIs used here. For development against this source, follow the
+repository's development instructions. Pin the tested package version in your
+application; a policy `version: 1` identifies the policy format, not a package
+version or a guarantee of identical behavior across every Python/JavaScript
+input. Validate your own fixtures in both runtimes.
+
 ## When to use it
 
 - API regression and contract testing
@@ -31,6 +57,9 @@ details so applications can build their own review workflow.
 ```bash
 npm install react-jycm-viewer react-monaco-editor monaco-editor
 ```
+
+For the webpack example, also install `monaco-editor-webpack-plugin` as a
+development dependency.
 
 Monaco must be configured by the consuming application. With webpack:
 

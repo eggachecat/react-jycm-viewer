@@ -2,7 +2,7 @@
   "name": "react-jycm-viewer",
   "private": false,
   "version": "0.1.0",
-  "description": "React rendering tool for JYCM (Json diff).",
+  "description": "React components for semantic JSON diff and RFC 6902 JSON Patch review.",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
   "types": "dist/es/index.d.ts",
